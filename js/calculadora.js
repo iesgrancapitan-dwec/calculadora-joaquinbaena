@@ -74,23 +74,23 @@
                     return () =>{
                         calculadora.valor2 = calculadora.display.value;
                         if(calculadora.suma){
-                            calculadora.display.value = parseInt(calculadora.valor1) + parseInt(calculadora.valor2);
+                            calculadora.display.value = parseFloat(calculadora.valor1) + parseFloat(calculadora.valor2);
                             calculadora.suma = false;
                         }
                         if(calculadora.resta){
-                            calculadora.display.value = parseInt(calculadora.valor1) - parseInt(calculadora.valor2);
+                            calculadora.display.value = parseFloat(calculadora.valor1) - parseFloat(calculadora.valor2);
                             calculadora.resta = false;
                         }
                         if(calculadora.div){
-                            calculadora.display.value = parseInt(calculadora.valor1) / parseInt(calculadora.valor2);
+                            calculadora.display.value = parseFloat(calculadora.valor1) / parseFloat(calculadora.valor2);
                             calculadora.div = false;
                         }
                         if(calculadora.mul){
-                            calculadora.display.value = parseInt(calculadora.valor1) * parseInt(calculadora.valor2);
+                            calculadora.display.value = parseFloat(calculadora.valor1) * parseFloat(calculadora.valor2);
                             calculadora.mul = false;
                         }
                         if(calculadora.modulo){
-                            calculadora.display.value = parseInt(calculadora.valor1) % parseInt(calculadora.valor2);
+                            calculadora.display.value = parseFloat(calculadora.valor1) % parseFloat(calculadora.valor2);
                             calculadora.modulo = false;
                         }
                     }
