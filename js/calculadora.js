@@ -5,6 +5,13 @@
     const calculadora = {
         display: undefined,
         reset: true,
+        valor1: 0,
+        valor2: 0,
+        suma: false,
+        resta: false,
+        div: false,
+        mul: false,
+        modulo: false,
         valoresBotones: ["CE", "←", "%", "+",
                         "7", "8", "9", "-",
                         "4", "5", "6", "x",
@@ -17,7 +24,6 @@
             return boton;
         },
         comportamiento: (valor) =>{
-
             if(/[1-9]/.test(valor)){
                 return () =>{
                     if(calculadora.reset){
@@ -62,6 +68,54 @@
                             calculadora.display.value = "-" + calculadora.display.value;
                         }else if(calculadora.display.value.includes("-") && calculadora.display.value !== "0"){
                             calculadora.display.value = calculadora.display.value.substr(1);
+                        }
+                    }
+                case "=":
+                    return () =>{
+                        calculadora.valor2 = calculadora.display.value;
+                        if(calculadora.suma){
+                            calculadora.display.value = parseInt(calculadora.valor1) + parseInt(calculadora.valor2);
+                            calculadora.suma = false;
+                        }
+                        if(calculadora.resta){
+                            calculadora.display.value = parseInt(calculadora.valor1) - parseInt(calculadora.valor2);
+                            calculadora.resta = false;
+                        }
+                        if(calculadora.div){
+                            calculadora.display.value = parseInt(calculadora.valor1) / parseInt(calculadora.valor2);
+                            calculadora.div = false;
+                        }
+                        if(calculadora.mul){
+                            calculadora.display.value = parseInt(calculadora.valor1) * parseInt(calculadora.valor2);
+                            calculadora.mul = false;
+                        }
+                        if(calculadora.modulo){
+                            calculadora.display.value = parseInt(calculadora.valor1) % parseInt(calculadora.valor2);
+                            calculadora.modulo = false;
+                        }
+                    }
+                default:
+                    return () =>{
+                        calculadora.valor1 = calculadora.display.value;
+                        if(valor === "+"){
+                            calculadora.suma = true;
+                            calculadora.reset = true;
+                        }
+                        if(valor === "-"){
+                            calculadora.resta = true;
+                            calculadora.reset = true;
+                        }
+                        if(valor === "/"){
+                            calculadora.div = true;
+                            calculadora.reset = true;
+                        }
+                        if(valor === "x"){
+                            calculadora.mul = true;
+                            calculadora.reset = true;
+                        }
+                        if(valor === "%"){
+                            calculadora.modulo = true;
+                            calculadora.reset = true;
                         }
                     }
                 }
