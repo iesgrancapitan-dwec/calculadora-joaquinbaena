@@ -17,20 +17,20 @@
                         "4", "5", "6", "x",
                         "1", "2", "3", "/",
                         "0", "±", ".", "="],
-        crearBoton: (valor) =>{
+        crearBoton: function(valor) {
             const boton = document.createElement("button");
             boton.innerHTML = valor;
-            boton.addEventListener("click", calculadora.comportamiento(valor));
+            boton.addEventListener("click", this.comportamiento(valor));
             return boton;
         },
-        comportamiento: (valor) =>{
+        comportamiento: function(valor) {
             if(/[1-9]/.test(valor)){
                 return () =>{
-                    if(calculadora.reset){
-                        calculadora.display.value = valor;
-                        calculadora.reset = false;
+                    if(this.reset){
+                        this.display.value = valor;
+                        this.reset = false;
                     }else{
-                        calculadora.display.value += valor;
+                        this.display.value += valor;
                     }
                 }
             }
@@ -38,116 +38,114 @@
             switch(valor){
                 case "0":
                     return () =>{
-                        if(!calculadora.reset){
-                            calculadora.display.value += valor;
+                        if(!this.reset){
+                            this.display.value += valor;
                         }
                     }
                 case ".":
                     return () =>{
-                        if(!calculadora.display.value.includes(".")){
-                            calculadora.display.value += valor;
-                            calculadora.reset = false;
+                        if(!this.display.value.includes(".")){
+                            this.display.value += valor;
+                            this.reset = false;
                         }
                     }
                 case "←":
                     return () =>{
-                        calculadora.display.value = calculadora.display.value.slice(0,-1);
-                        if(calculadora.display.value === ""){
-                            calculadora.display.value = "0";
-                            calculadora.reset = true;
+                        this.display.value = this.display.value.slice(0,-1);
+                        if(this.display.value === "0" || this.display.value === ""){
+                            this.display.value = "0";
+                            this.reset = true;
                         }
                     }
                 case "CE":
                     return () =>{
-                        calculadora.display.value = "0";
-                        calculadora.reset = true;
+                        this.display.value = "0";
+                        this.reset = true;
                     }
                 case "±":
                     return () =>{
-                        if(!calculadora.display.value.includes("-") && calculadora.display.value !== "0"){
-                            calculadora.display.value = "-" + calculadora.display.value;
-                        }else if(calculadora.display.value.includes("-") && calculadora.display.value !== "0"){
-                            calculadora.display.value = calculadora.display.value.substr(1);
+                        if(!this.display.value.includes("-") && this.display.value !== "0"){
+                            this.display.value = "-" + this.display.value;
+                        }else if(this.display.value.includes("-") && this.display.value !== "0"){
+                            this.display.value = this.display.value.substr(1);
                         }
                     }
                 case "=":
                     return () =>{
-                        calculadora.valor2 = calculadora.display.value;
-                        if(calculadora.suma){
-                            calculadora.display.value = parseFloat(calculadora.valor1) + parseFloat(calculadora.valor2);
-                            calculadora.suma = false;
+                        this.valor2 = this.display.value;
+                        if(this.suma){
+                            this.display.value = parseFloat(this.valor1) + parseFloat(this.valor2);
+                            this.suma = false;
                         }
-                        if(calculadora.resta){
-                            calculadora.display.value = parseFloat(calculadora.valor1) - parseFloat(calculadora.valor2);
-                            calculadora.resta = false;
+                        if(this.resta){
+                            this.display.value = parseFloat(this.valor1) - parseFloat(this.valor2);
+                            this.resta = false;
                         }
-                        if(calculadora.div){
-                            calculadora.display.value = parseFloat(calculadora.valor1) / parseFloat(calculadora.valor2);
-                            calculadora.div = false;
+                        if(this.div){
+                            this.display.value = parseFloat(this.valor1) / parseFloat(this.valor2);
+                            this.div = false;
                         }
-                        if(calculadora.mul){
-                            calculadora.display.value = parseFloat(calculadora.valor1) * parseFloat(calculadora.valor2);
-                            calculadora.mul = false;
+                        if(this.mul){
+                            this.display.value = parseFloat(this.valor1) * parseFloat(this.valor2);
+                            this.mul = false;
                         }
-                        if(calculadora.modulo){
-                            calculadora.display.value = parseFloat(calculadora.valor1) % parseFloat(calculadora.valor2);
-                            calculadora.modulo = false;
+                        if(this.modulo){
+                            this.display.value = parseFloat(this.valor1) % parseFloat(this.valor2);
+                            this.modulo = false;
                         }
                     }
                 default:
                     return () =>{
-                        calculadora.valor1 = calculadora.display.value;
+                        this.valor1 = this.display.value;
                         if(valor === "+"){
-                            calculadora.suma = true;
-                            calculadora.reset = true;
+                            this.suma = true;
+                            this.reset = true;
                         }
                         if(valor === "-"){
-                            calculadora.resta = true;
-                            calculadora.reset = true;
+                            this.resta = true;
+                            this.reset = true;
                         }
                         if(valor === "/"){
-                            calculadora.div = true;
-                            calculadora.reset = true;
+                            this.div = true;
+                            this.reset = true;
                         }
                         if(valor === "x"){
-                            calculadora.mul = true;
-                            calculadora.reset = true;
+                            this.mul = true;
+                            this.reset = true;
                         }
                         if(valor === "%"){
-                            calculadora.modulo = true;
-                            calculadora.reset = true;
+                            this.modulo = true;
+                            this.reset = true;
                         }
                     }
                 }
         },
-        init: () =>{
-            return document.addEventListener("DOMContentLoaded", () =>{
-                const caja = document.createElement("div");
-                caja.style.display = "grid";
-                caja.style.width = "300px";
-                caja.style.height = "400px";
-                caja.style.gridGap = "3px";
-                caja.style.backgroundColor = "black";
-                caja.style.padding = "4px";
-                caja.style.gridTemplateColumns =  "repeat(4,1fr)";
-                document.body.appendChild(caja);
+        init: () => {
+            const caja = document.createElement("div");
+            caja.style.display = "grid";
+            caja.style.width = "300px";
+            caja.style.height = "400px";
+            caja.style.gridGap = "3px";
+            caja.style.backgroundColor = "black";
+            caja.style.padding = "4px";
+            caja.style.gridTemplateColumns =  "repeat(4,1fr)";
+            document.body.appendChild(caja);
 
-                calculadora.display = document.createElement("input");
-                calculadora.display.setAttribute("type", "text");
-                calculadora.display.setAttribute("readonly", "true");
-                calculadora.display.setAttribute("name", "display");
-                calculadora.display.style.gridArea = "input";
-                calculadora.display.style.fontSize = "20px";
-                calculadora.display.style.textAlign = "right";
-                calculadora.display.style.gridArea = "1/1/2/5";
-                calculadora.display.value = "0";
-                caja.appendChild(calculadora.display);
+            calculadora.display = document.createElement("input");
+            calculadora.display.setAttribute("type", "text");
+            calculadora.display.setAttribute("readonly", "true");
+            calculadora.display.setAttribute("name", "display");
+            calculadora.display.style.gridArea = "input";
+            calculadora.display.style.fontSize = "20px";
+            calculadora.display.style.textAlign = "right";
+            calculadora.display.style.gridArea = "1/1/2/5";
+            calculadora.display.value = "0";
+            caja.appendChild(calculadora.display);
 
-                calculadora.valoresBotones.forEach(element => {
-                    caja.appendChild(calculadora.crearBoton(element));
-                });
+            calculadora.valoresBotones.forEach(element => {
+                caja.appendChild(calculadora.crearBoton(element));
             });
         }
     }
-    calculadora.init();
+    document.addEventListener("DOMContentLoaded",calculadora.init);
 }
